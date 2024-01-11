@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.app-button {
+  padding: 1em;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  margin: 0.5em;
+  cursor: pointer;
+  font-size: 600;
+}
+.app-button-selected {
+  background: linear-gradient(45deg, #a9adf6, transparent);
+}
+
+.main-iframe {
+  width: 100vw;
+  height: 90vh;
+}

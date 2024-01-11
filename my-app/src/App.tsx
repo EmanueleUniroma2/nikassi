@@ -1,24 +1,68 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.scss";
+
+interface IAppButton {
+  path: string;
+  name: string;
+  icon: string;
+}
+
+const routes: IAppButton[] = [
+  {
+    path: "http://192.168.1.91/olfact.html",
+    name: "Olfactometer",
+    icon: "",
+  },
+  {
+    path: "http://192.168.1.85/color.html",
+    name: "Colorimeter",
+    icon: "",
+  },
+  {
+    path: "http://192.168.1.83/taste.html",
+    name: "Tastemeter",
+    icon: "",
+  },
+];
+
+const AppButton = (props: {
+  target: IAppButton;
+  active: boolean;
+  emit: () => void;
+}) => {
+  return (
+    <div
+      className={"app-button " + (props.active ? "app-button-selected" : "")}
+      onClick={() => {
+        props.emit();
+      }}
+    >
+      {props.target.name}
+    </div>
+  );
+};
 
 function App() {
+  const [openPage, setOpenPage] = useState<string>("");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {routes.map((x: IAppButton, i: number) => {
+        return (
+          <AppButton
+            active={openPage === x.path}
+            emit={() => {
+              setOpenPage(x.path);
+            }}
+            key={i}
+            target={x}
+          />
+        );
+      })}
+      <div>
+        <iframe className="main-iframe" src={openPage} />
+      </div>
     </div>
   );
 }
