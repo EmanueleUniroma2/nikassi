@@ -55,3 +55,20 @@
   width: 100vw;
   height: 90vh;
 }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  padding: 0.3em 1em;
+}
+
+.intro-text {
+  padding: 2em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
