@@ -12,33 +12,41 @@ const routes: IAppButton[] = [
   {
     path: "http://192.168.1.91/olfact.html",
     name: "Olfactometer",
-    icon: "",
+    icon: "./beer-sniff.jpeg",
   },
   {
     path: "http://192.168.1.85/color.html",
     name: "Colorimeter",
-    icon: "",
+    icon: "./beer-color-meter.jpeg",
   },
   {
     path: "http://192.168.1.83/taste.html",
     name: "Tastemeter",
-    icon: "",
+    icon: "./taste-beer.jpeg",
   },
 ];
 
 const AppButton = (props: {
   target: IAppButton;
   active: boolean;
+  isBig?: boolean;
   emit: () => void;
 }) => {
   return (
     <div
-      className={"app-button " + (props.active ? "app-button-selected" : "")}
+      style={
+        props.isBig ? { backgroundImage: "url(" + props.target.icon + ")" } : {}
+      }
+      className={
+        props.isBig
+          ? "app-button-big"
+          : "app-button " + (props.active ? "app-button-selected" : "")
+      }
       onClick={() => {
         props.emit();
       }}
     >
-      {props.target.name}
+      <span>{props.target.name}</span>
     </div>
   );
 };
@@ -47,7 +55,7 @@ function App() {
   const [openPage, setOpenPage] = useState<string>("");
 
   return (
-    <div className="App">
+    <div className="App" style={{ backgroundImage: "url('./bar.png')" }}>
       <div className="toolbar">
         <div
           className="toolbar-buttons-logo"
@@ -55,7 +63,7 @@ function App() {
             setOpenPage("");
           }}
         >
-          Nikasi Logo
+          <img style={{ height: "4em" }} src="./solidale.jpg" />
         </div>
         <div className="toolbar-buttons">
           {routes.map((x: IAppButton, i: number) => {
@@ -74,23 +82,29 @@ function App() {
       </div>
       {openPage === "" && (
         <div className="intro-text">
-          <h2>Benvenuto in Nikasi</h2>
-          <div>Sistema sviluppato da bla bla</div>
-          <div>Copiright bla bla</div>
-          <div>Copiright bla bla</div>
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          <div className="intro-text-wrap">
+            <h2>Benvenuto in Nikasi</h2>
+            <div>Powered By IES Team s.r.l.</div>
+          </div>
+          <div className="toolbar-buttons-big">
+            {routes.map((x: IAppButton, i: number) => {
+              return (
+                <AppButton
+                  isBig
+                  active={openPage === x.path}
+                  emit={() => {
+                    setOpenPage(x.path);
+                  }}
+                  key={i}
+                  target={x}
+                />
+              );
+            })}
           </div>
         </div>
       )}
       {openPage !== "" && (
-        <div>
+        <div className="iframe-container">
           <iframe className="main-iframe" src={openPage} />
         </div>
       )}
